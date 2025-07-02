@@ -1,0 +1,6 @@
+streamlit
+openpyxl
+barcode
+qrcode
+aztec-code-generator
+Pillow
