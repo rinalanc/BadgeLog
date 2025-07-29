@@ -7,44 +7,41 @@ import zipfile # Para compactar as imagens para download
 
 # --- IMPORTAÇÕES DAS BIBLIOTERAS DE CÓDIGOS DE BARRAS ---
 from aztec_code_generator import AztecCode
-# As bibliotecas 'barcode' e 'qrcode' não são mais estritamente necessárias se for apenas Aztec,
-# mas as manteremos no requirements.txt por consistência e futuras expansões.
 from PIL import Image 
 # --- FIM DAS IMPORTAÇÕES ---
 
-def generate_aztec_codes_streamlit(input_file_content):
+def generate_aztec_codes_streamlit(input_text_content):
     """
-    Gera códigos Aztec e um arquivo Excel a partir de um conteúdo de arquivo TXT,
+    Gera códigos Aztec e um arquivo Excel a partir de um conteúdo de texto,
     retornando os dados em memória.
 
     Args:
-        input_file_content (bytes): Conteúdo do arquivo TXT de entrada como bytes.
+        input_text_content (str): Conteúdo de texto de entrada (códigos separados por linha).
 
     Returns:
         tuple: (excel_buffer, image_buffers)
                excel_buffer (io.BytesIO): Buffer contendo o arquivo Excel.
                image_buffers (list): Lista de tuplas (filename, io.BytesIO) para as imagens.
     """
-    # Decodifica o conteúdo do arquivo de bytes para string, depois divide em linhas
-    lines = input_file_content.decode('utf-8').splitlines()
+    # Divide o conteúdo da caixa de texto em linhas
+    lines = input_text_content.splitlines()
 
     excel_data = []
     excel_data.append(["Dado Original", "Tipo de Código", "Nome do Arquivo Gerado"])
 
     image_buffers = [] # Lista para armazenar as imagens em memória
 
+    # Filtra linhas vazias que podem surgir de quebras de linha extras
+    lines = [line.strip() for line in lines if line.strip()]
+
     if not lines:
-        st.warning("O arquivo TXT está vazio. Nenhum código Aztec para gerar.")
+        st.warning("A caixa de texto está vazia ou contém apenas espaços. Nenhum código Aztec para gerar.")
         return None, []
 
-    st.info(f"Lendo {len(lines)} linhas do arquivo...")
+    st.info(f"Gerando códigos para {len(lines)} entradas...")
 
-    for i, line in enumerate(lines):
-        code_data = line.strip()
-
-        if not code_data:
-            st.warning(f"Linha {i+1} está vazia, pulando.")
-            continue
+    for i, line_data in enumerate(lines):
+        code_data = line_data.strip()
 
         generated_filename = None
         image_buffer = io.BytesIO() # Buffer para a imagem atual
@@ -104,23 +101,23 @@ st.title("🏗️ Prometheus Aztec Generator")
 st.markdown("---")
 
 st.markdown("""
-Esta ferramenta gera **Códigos Aztec** a partir de um arquivo de texto.
+Esta ferramenta gera **Códigos Aztec** a partir de dados inseridos diretamente.
 """)
 
-# 1. Upload do arquivo TXT
-st.header("1. Carregar Arquivo de Dados")
-uploaded_file = st.file_uploader(
-    "Arraste e solte ou clique para carregar seu arquivo `.txt` (um dado por linha)",
-    type=["txt"]
+# 1. Caixa de texto para entrada de dados
+st.header("1. Inserir Dados")
+input_data_text = st.text_area(
+    "Digite os códigos a serem gerados (um código por linha):",
+    height=200,
+    placeholder="Exemplo:\nCODIGO123\nPRODUTOABC\n4567890"
 )
 
 # Botão para iniciar a geração
 st.header("2. Gerar Códigos Aztec e Excel")
 if st.button("Gerar Códigos Aztec"):
-    if uploaded_file is not None:
+    if input_data_text.strip(): # Verifica se a caixa de texto não está vazia ou só com espaços
         with st.spinner("Gerando códigos Aztec e arquivo Excel..."):
-            file_contents = uploaded_file.read()
-            excel_buffer, image_buffers = generate_aztec_codes_streamlit(file_contents)
+            excel_buffer, image_buffers = generate_aztec_codes_streamlit(input_data_text)
         
         st.markdown("---")
         st.header("3. Download dos Resultados")
@@ -150,10 +147,10 @@ if st.button("Gerar Códigos Aztec"):
             )
         
         if not excel_buffer and not image_buffers:
-            st.warning("Nenhum arquivo gerado. Verifique o arquivo de entrada e as mensagens de erro acima.")
+            st.warning("Nenhum arquivo gerado. Verifique a entrada e as mensagens de erro acima.")
 
     else:
-        st.warning("Por favor, carregue um arquivo TXT para começar.")
+        st.warning("Por favor, digite os códigos na caixa de texto para começar.")
 
 st.markdown("---")
-st.info("Desenvolvido por Rinalanc. Data: 30/06/2025")
+st.info("desenvolvido 30/0/2025. atualizado para leo 29/07/2025 kkkk")
