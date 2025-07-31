@@ -160,4 +160,4 @@ if st.button("Gerar Códigos Aztec"):
         st.warning("Por favor, digite os códigos na caixa de texto para começar.")
 
 st.markdown("---")
-st.info("Desenvolvido 30/06/2025. atualizado para leo 30/07/2025")
+st.info("Desenvolvido 30/06/2025. atualizado para leo 29/07/2025")
