@@ -93,11 +93,18 @@ def generate_aztec_codes_streamlit(input_text_content):
 # --- Interface do Streamlit ---
 st.set_page_config(
     page_title="Prometheus Aztec Generator",
-    page_icon="logo.png", # <<< ATUALIZADO para "logo.png"!
+    page_icon="logo.png", # Define o ícone da aba do navegador
     layout="centered"
 )
 
-st.title("🏗️ Prometheus Aztec Generator")
+# --- ALTERAÇÃO AQUI: Substituindo st.title por st.markdown com a imagem ---
+st.markdown(
+    f"<img src='logo.png' style='height: 50px; vertical-align: middle; margin-right: 15px;'> "
+    f"<span style='font-size: 2.5em; font-weight: bold;'>Prometheus Aztec Generator</span>",
+    unsafe_allow_html=True
+)
+# --- FIM DA ALTERAÇÃO ---
+
 st.markdown("---")
 
 st.markdown("""
@@ -153,4 +160,4 @@ if st.button("Gerar Códigos Aztec"):
         st.warning("Por favor, digite os códigos na caixa de texto para começar.")
 
 st.markdown("---")
-st.info("Desenvolvido com o apoio de Gemini (Google AI). Data: 02/07/2025")
+st.info("Desenvolvido 30/06/2025. atualizado para leo 30/07/2025")
