@@ -97,12 +97,17 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- ALTERAÇÃO AQUI: Substituindo st.title por st.markdown com a imagem ---
-st.markdown(
-    f"<img src='logo.png' style='height: 50px; vertical-align: middle; margin-right: 15px;'> "
-    f"<span style='font-size: 2.5em; font-weight: bold;'>Prometheus Aztec Generator</span>",
-    unsafe_allow_html=True
-)
+# --- ALTERAÇÃO AQUI: Usando st.columns e st.image para o logo e st.markdown para o título ---
+col1, col2 = st.columns([0.1, 0.9]) # Divide a largura em duas colunas (10% para imagem, 90% para texto)
+
+with col1:
+    st.image("logo.png", width=50) # Exibe a imagem do logo
+
+with col2:
+    st.markdown(
+        f"<span style='font-size: 2.5em; font-weight: bold; vertical-align: middle;'>Prometheus Aztec Generator</span>",
+        unsafe_allow_html=True
+    )
 # --- FIM DA ALTERAÇÃO ---
 
 st.markdown("---")
@@ -160,4 +165,4 @@ if st.button("Gerar Códigos Aztec"):
         st.warning("Por favor, digite os códigos na caixa de texto para começar.")
 
 st.markdown("---")
-st.info("Desenvolvido 30/06/2025. atualizado para leo 29/07/2025")
+st.info("Desenvolvido com o apoio de Gemini (Google AI). Data: 02/07/2025")
