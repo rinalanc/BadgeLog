@@ -165,4 +165,4 @@ if st.button("Gerar Códigos Aztec"):
         st.warning("Por favor, digite os códigos na caixa de texto para começar.")
 
 st.markdown("---")
-st.info("Desenvolvido com o apoio de Gemini (Google AI). Data: 02/07/2025")
+st.info("Desenvolvido 30/06/2025. atualizado para leo 30/07/2025 kkkk")
